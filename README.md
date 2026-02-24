@@ -34,8 +34,11 @@ HouseRent is a MERN stack web application designed to simplify house rental mana
 ## 📂 Project Structure
 
 HouseRent/
+
 ├── frontend/ # React frontend
+
 ├── backend/ # Node.js & Express backend
+
 └── README.md
 
 ---
