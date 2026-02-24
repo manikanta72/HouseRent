@@ -9,11 +9,13 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
+import CircularProgress from '@mui/material/CircularProgress';
 import axios from 'axios';
 import { message } from 'antd';
 
 const Login = () => {
   const navigate = useNavigate()
+  const [loading, setLoading] = useState(false);
   const [data, setData] = useState({
     name: "",
     email: "",
@@ -31,96 +33,83 @@ const Login = () => {
 
     if (!data?.email || !data?.password) {
       return alert("Please fill all fields");
-    } else {
-      axios.post('http://localhost:8001/api/user/login', data)
-        .then((res) => {
-          if (res.data.success) {
-            message.success(res.data.message);
-
-            localStorage.setItem("token", res.data.token);
-            localStorage.setItem("user", JSON.stringify(res.data.user));
-            const isLoggedIn = JSON.parse(localStorage.getItem("user"));
-
-            switch (isLoggedIn.type) {
-              case "Admin":
-                navigate("/adminhome");
-                break;
-              case "Renter":
-                navigate("/renterhome");
-                break;
-              case "Owner":
-                if (isLoggedIn.granted === 'ungranted') {
-                  message.error('Your account is not yet confirmed by the admin');
-                } else {
-                  navigate("/ownerhome");
-                }
-                break;
-              default:
-                navigate("/login");
-                break;
-            }
-            setTimeout(()=>{
-              window.location.reload()
-            },1000)
-          } else {
-            message.error(res.data.message);
-          }
-        })
-        .catch((err) => {
-          if (err.response && err.response.status === 401) {
-            alert("User doesn't exist");
-          }
-          navigate("/login");
-        });
     }
+
+    setLoading(true);
+
+    axios.post('http://localhost:8001/api/user/login', data)
+      .then((res) => {
+        setLoading(false);
+
+        if (res.data.success) {
+          message.success(res.data.message);
+
+          localStorage.setItem("token", res.data.token);
+          localStorage.setItem("user", JSON.stringify(res.data.user));
+          const isLoggedIn = JSON.parse(localStorage.getItem("user"));
+
+          switch (isLoggedIn.type) {
+            case "Admin":
+              navigate("/adminhome");
+              break;
+            case "Renter":
+              navigate("/renterhome");
+              break;
+            case "Owner":
+              if (isLoggedIn.granted === 'ungranted') {
+                message.error('Your account is not yet confirmed by the admin');
+              } else {
+                navigate("/ownerhome");
+              }
+              break;
+            default:
+              navigate("/login");
+              break;
+          }
+
+          setTimeout(() => window.location.reload(), 1000);
+        } else {
+          message.error(res.data.message);
+        }
+      })
+      .catch(() => {
+        setLoading(false);
+        message.error("Invalid credentials");
+      });
   };
 
   return (
     <>
-      <Navbar expand="lg" className="bg-body-tertiary">
+      {/* ================= NAVBAR ================= */}
+      <Navbar expand="lg" className="custom-navbar">
         <Container fluid>
-          <Navbar.Brand><h2>RentEase</h2></Navbar.Brand>
-          <Navbar.Toggle aria-controls="navbarScroll" />
-          <Navbar.Collapse id="navbarScroll">
-            <Nav
-              className="me-auto my-2 my-lg-0"
-              style={{ maxHeight: '100px' }}
-              navbarScroll
-            >
+          <Navbar.Brand className="brand-text">RentEase</Navbar.Brand>
+          <Navbar.Toggle />
+          <Navbar.Collapse>
+            <Nav className="ms-auto gap-3">
+              <Link className="nav-link-custom" to="/">Home</Link>
+              <Link className="nav-link-custom" to="/login">Login</Link>
+              <Link className="nav-link-custom" to="/register">Register</Link>
             </Nav>
-            <Nav>
-              <Link to={'/'}>Home</Link>
-              <Link to={'/login'}>Login</Link>
-              <Link to={'/register'}>Register</Link>
-            </Nav>
-
           </Navbar.Collapse>
         </Container>
       </Navbar>
 
-
-      <Container component="main" >
-        <Box
-          sx={{
-            marginTop: 8,
-            marginBottom: 4,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
-          <Avatar sx={{ bgcolor: 'secondary.main' }}>
+      {/* ================= LOGIN FORM ================= */}
+      <Container component="main" className="login-container">
+        <Box className="login-card">
+          <Avatar className="login-avatar">
             <LockOutlinedIcon />
           </Avatar>
-          <Typography component="h1" variant="h5">
+
+          <Typography component="h1" variant="h5" className="login-title">
             Sign In
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate>
 
+          <Box component="form" onSubmit={handleSubmit} noValidate>
             <TextField
               margin="normal"
               fullWidth
-              id="email"
               label="Email Address"
               name="email"
               value={data.email}
@@ -128,6 +117,7 @@ const Login = () => {
               autoComplete="email"
               autoFocus
             />
+
             <TextField
               margin="normal"
               fullWidth
@@ -136,26 +126,30 @@ const Login = () => {
               onChange={handleChange}
               label="Password"
               type="password"
-              id="password"
               autoComplete="current-password"
             />
-            <Box mt={2}>
+
+            <Box mt={3} textAlign="center">
               <Button
                 type="submit"
                 variant="contained"
-                style={{ width: '200px' }}
+                disabled={loading}
+                className="login-btn"
               >
-                Sign Up
+                {loading ? <CircularProgress size={22} color="inherit" /> : "Sign In"}
               </Button>
             </Box>
-            <Grid container>
-              <Grid item>forgot password?
-                <Link style={{ color: "red" }} to={'/forgotpassword'} variant="body2">
+
+            <Grid container className="login-links">
+              <Grid item xs={12}>
+                Forgot password?
+                <Link to="/forgotpassword" className="forgot-link">
                   {" Click here"}
                 </Link>
               </Grid>
-              <Grid item>Have an account?
-                <Link style={{ color: "blue" }} to={'/register'} variant="body2">
+              <Grid item xs={12}>
+                Don’t have an account?
+                <Link to="/register" className="signup-link">
                   {" Sign Up"}
                 </Link>
               </Grid>
@@ -167,4 +161,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default Login;

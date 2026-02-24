@@ -1,255 +1,427 @@
 @import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 
+/* ================= GLOBAL RESET ================= */
 * {
-   margin: 0;
-   padding: 0;
-   box-sizing: border-box;
-   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", "Segoe UI", Roboto, sans-serif;
 }
 
-html,
 body {
-   width: 100%;
-   height: 100%;
+  background-color: #f8f9fa;
 }
 
-a {
-   color: black;
-   text-decoration: none;
-   margin-right: 20px;
+/* ================= NAVBAR ================= */
+.custom-navbar {
+  background: linear-gradient(90deg, #0d6efd, #6610f2);
 }
 
-.App {
-   display: flex;
-   flex-direction: column;
-   min-height: 100vh;
+.brand-text {
+  font-size: 26px;
+  font-weight: 800;
+  color: #fff !important;
 }
 
-.content {
-   flex: 1;
+.nav-link-custom {
+  color: #fff !important;
+  font-weight: 500;
 }
 
-.home-body {
-   height: 81.5vh;
-   overflow: hidden;
+.nav-link-custom:hover {
+  text-decoration: underline;
 }
 
-.home-body .carousel {
-   max-height: 100%;
+.nav-cta {
+  background: #fff;
+  color: #0d6efd;
+  font-weight: 600;
+  border-radius: 20px;
 }
 
-.home-body .carousel .carousel-item {
-   height: 100%;
+/* ================= HERO ================= */
+.hero-img {
+  height: 75vh;
+  object-fit: cover;
 }
 
-.home-body .carousel .carousel-item img {
-   width: 100%;
-   height: 100%;
-   object-fit: contain;
-   background-size: cover;
+.hero-caption {
+  background: rgba(0,0,0,0.55);
+  padding: 20px;
+  border-radius: 12px;
 }
 
-.property-content {
-   display: flex;
-   flex-wrap: wrap;
-   justify-content: center;
+/* ================= SECTIONS ================= */
+.section {
+  padding: 60px 0;
 }
 
-.content-home {
-   position: absolute;
-   top: 30%;
-   left: 5%;
+.section-title {
+  font-weight: 700;
+  margin-bottom: 30px;
+  text-align: center;
 }
 
-.content-home p {
-   font-size: 42px;
-   font-weight: 800;
-   color: rgb(102, 62, 9);
+/* ================= CARDS ================= */
+.click-card {
+  cursor: pointer;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-.filter-container {
-   width: 100%;
-   height: 10vh;
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   margin-bottom: 10px;
+.click-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 30px rgba(0,0,0,0.12);
 }
 
-.filter-container input,
-select {
-   border: 1px solid black;
-   padding: 10px;
-   margin: 10px;
-   border-radius: 5px;
+/* ================= VIDEO TRUST ================= */
+.video-card {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.15);
 }
 
-.column {
-   width: 100%;
-   display: flex;
-   flex-wrap: wrap;
+.trust-video {
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
 }
 
-.card {
-   margin-right: 20px;
-   margin-bottom: 15px;
+.video-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 
-.card .card-body .card-title img {
-   width: 100%;
-   height: 150px;
+/* ================= CTA ================= */
+.cta-section {
+  background: linear-gradient(135deg, #0d6efd, #6610f2);
+  color: white;
+  padding: 60px 20px;
+  text-align: center;
 }
 
-.chat-container {
-   display: flex;
-   flex-direction: column;
-   height: 100%;
+/* ===== HAPPY CUSTOMER VIDEOS ===== */
+.customer-video-card {
+  background: #fff;
+  padding: 15px;
+  border-radius: 14px;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  margin-bottom: 20px;
 }
 
-.chat-container h1 {
-   font-size: 22px;
-   text-align: center;
-   margin-bottom: 20px;
+.customer-video {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 12px;
+  cursor: pointer;
 }
 
-
-.message-window {
-   /* flex: 1; */
-   overflow-x: auto;
-   padding: 10px;
-   width: 100%;
-   max-height: 200px;
-   height: 100px;
-   border: 1px solid lightgray;
-   border-radius: 5px;
+.video-title {
+  font-weight: 600;
+  margin-bottom: 10px;
 }
 
-.message {
-   background-color: #f5f5f5;
-   padding: 5px;
-   margin-bottom: 10px;
+.video-hint {
+  font-size: 16px;
+  color: #111212;
+  margin-top: 8px;
+}
+/* ================= UI POLISH PASS ================= */
+
+/* Global typography improvement */
+h2, h3, h4, h5 {
+  font-weight: 600;
+  letter-spacing: 0.3px;
 }
 
-.input-container {
-   display: flex;
-   align-items: center;
-   padding: 12px;
+.section-title {
+  font-size: 28px;
+  margin-bottom: 40px;
+  color: #1f2937; /* slate-800 */
 }
 
-.input-container textarea {
-   width: 25px;
-   flex: 1;
-   padding: 5px;
-   margin-right: 5px;
-   border: none;
-   border-radius: 5px;
-   background-color: rgb(250, 247, 247);
+/* ================= HAPPY CUSTOMER VIDEOS ================= */
+.customer-video-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.input-container button {
-   padding: 5px 10px;
-   color: white;
-   font-size: 12px;
-   border: none;
-   width: 40px;
-   height: 40px;
-   border-radius: 50%;
+.customer-video-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.12);
 }
 
-@media screen and (max-width: 480px) {
-   .chat-container {
-      height: auto;
-   }
+.video-title {
+  font-size: 16px;
+  color: #111827;
 }
 
+.customer-video {
+  transition: transform 0.3s ease;
+}
 
-/* {allProperties.some((app) => (app.jobInfo._id === property._id) && (app.status === 'applied' || app.status === 'rejected' || app.status === 'selected')) ? (
-                              <p style={{ float: 'right', color: 'grey' }} variant="warning" disabled>
-                                 Already Applied
-                              </p>
-                           ) : userLoggedIn ? (
-                              <Button
-                                 style={{ float: 'right' }}
-                                 variant="outline-warning"
-                                 onClick={() => setSelectedJobId(property._id)}
-                              >
-                                 Apply Now
-                              </Button>
-                           ) : (
-                              <Button style={{ float: 'right' }} variant="outline-warning">
-                                 <Link to={'/login'}>Buy Now</Link>
-                              </Button>
-                           )} */
-/* <Modal
-                              centered
-                              open={selectedJobId === property._id}
-                              onOk={() => setSelectedJobId(null)}
-                              onCancel={() => setSelectedJobId(null)}
-                              width={1000}
-                           >
-                              <Form onFinish={() => handleSubmit(property._id)} className='m-3'>
-                                 <h3>Job Description and Skills</h3><hr />
-                                 <div className="d-flex flex-column mt-0">
-                                    <h5>Descrption:</h5><p>{property.jobDescription}</p><br />
-                                    <h5>Skills:</h5><p>{property.skills}</p><br />
-                                 </div>
-                                 <hr style={{ height: 3, background: 'black' }} />
-                                 <h3>Enter Your Details for the Application</h3><hr />
-                                 <h5>Personal Details:</h5>
-                                 <Row gutter={20}>
-                                    <Col xs={24} md={12} lg={8}>
-                                       <Form.Item label="Full Name" required>
-                                          <Input name='name' value={details.name} onChange={handleChange} placeholder='Enter name' />
-                                       </Form.Item>
-                                    </Col>
-                                    <Col xs={24} md={12} lg={8}>
-                                       <Form.Item label="Phone" required>
-                                          <Input name='phone' value={details.phone} onChange={handleChange} type='number' placeholder='Your phone' />
-                                       </Form.Item>
-                                    </Col>
-                                    <Col xs={24} md={12} lg={8}>
-                                       <Form.Item label="Email" required>
-                                          <Input name='email' value={details.email} onChange={handleChange} type='email' placeholder='Your email' />
-                                       </Form.Item>
-                                    </Col>
-                                    <Col xs={24} md={12} lg={8}>
-                                       <Form.Item label="Address" required>
-                                          <Input name='address' value={details.address} onChange={handleChange} type='text' placeholder='Your address' />
-                                       </Form.Item>
-                                    </Col>
-                                 </Row>
-                                 <h5>Highest Educational Details:</h5>
-                                 <Row gutter={20}>
-                                    <Col xs={24} md={12} lg={8}>
-                                       <Form.Item label="University Name" required>
-                                          <Input name='universityName' value={details.universityName} onChange={handleChange} type='text' placeholder='Your university name' />
-                                       </Form.Item>
-                                    </Col>
-                                    <Col xs={24} md={12} lg={8}>
-                                       <Form.Item label="Highest Degree" required>
-                                          <Input name='degree' value={details.degree} onChange={handleChange} type='text' placeholder='Your highest degree' />
-                                       </Form.Item>
-                                    </Col>
-                                    <Col xs={24} md={12} lg={8}>
-                                       <Form.Item label="Experience" required>
-                                          <Input name='experience' value={details.experience} onChange={handleChange} type='number' placeholder='Your experience' />
-                                       </Form.Item>
-                                    </Col>
-                                 </Row>
-                                 <h5>Resume(only in Pdf Format):</h5>
-                                 <Row gutter={20}>
-                                    <Col xs={24} md={12} lg={8}>
-                                       <Form.Item label="Resume" required>
-                                          <Input name='resume' accept="application/pdf" onChange={handleDocumentChange} type='file' />
-                                       </Form.Item>
-                                    </Col>
-                                    <br />
-                                    <Form.Item>
-                                       <Button type='submit' variant='outline-warning'>
-                                          Submit
-                                       </Button>
-                                    </Form.Item>
-                                 </Row>
-                              </Form>
-                           </Modal> */
+.customer-video:hover {
+  transform: scale(1.03);
+}
+
+/* ================= BUTTONS ================= */
+button,
+.btn {
+  transition: all 0.25s ease;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+/* ================= NAVBAR LINKS ================= */
+.nav-link-custom {
+  position: relative;
+}
+
+.nav-link-custom::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0;
+  height: 2px;
+  background-color: #ffffff;
+  transition: width 0.3s ease;
+}
+
+.nav-link-custom:hover::after {
+  width: 100%;
+}
+
+/* ================= ICON HELPERS ================= */
+.icon-muted {
+  color: #6b7280;
+  margin-right: 6px;
+}
+
+/* ================= SMOOTH SECTION ENTRY ================= */
+.section {
+  animation: fadeUp 0.6s ease both;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .customer-video {
+    height: 180px;
+  }
+
+  .filter-container-modern {
+    flex-direction: column;
+  }
+}
+/* ================= LOGIN PAGE UI ================= */
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 85vh;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 420px;
+  padding: 40px;
+  border-radius: 18px;
+  background: #ffffff;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.08);
+  animation: slideFade 0.6s ease;
+}
+
+.login-avatar {
+  margin: auto;
+  background-color: #2563eb !important;
+}
+
+.login-title {
+  margin-top: 15px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.login-btn {
+  width: 200px;
+  height: 44px;
+  border-radius: 22px !important;
+  background-color: #2563eb !important;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.login-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(37,99,235,0.35);
+}
+
+.login-links {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.forgot-link {
+  color: #dc2626;
+  margin-left: 6px;
+}
+
+.signup-link {
+  color: #2563eb;
+  margin-left: 6px;
+}
+
+/* Input focus smoothness */
+.MuiInputBase-root {
+  transition: box-shadow 0.25s ease;
+}
+
+.MuiInputBase-root.Mui-focused {
+  box-shadow: 0 0 0 2px rgba(37,99,235,0.2);
+}
+/* ================= FOOTER ================= */
+
+.footer-main {
+  background-color: #0f172a; /* slate-900 */
+  color: #cbd5f5;
+  padding: 60px 0 30px;
+  font-size: 14px;
+}
+
+.footer-top {
+  margin-bottom: 30px;
+}
+
+.footer-brand {
+  font-size: 22px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 12px;
+}
+
+.footer-desc {
+  max-width: 300px;
+  line-height: 1.6;
+  color: #cbd5f5;
+}
+
+.footer-title {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #ffffff;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-links li {
+  margin-bottom: 8px;
+  cursor: pointer;
+  color: #cbd5f5;
+  transition: color 0.2s ease;
+}
+
+.footer-links li:hover {
+  color: #ffffff;
+}
+
+.footer-links a {
+  color: inherit;
+}
+
+.footer-contact {
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.footer-divider {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.footer-bottom {
+  align-items: center;
+  font-size: 13px;
+}
+
+.footer-social {
+  display: flex;
+  gap: 16px;
+  justify-content: flex-end;
+}
+
+.footer-social i {
+  font-size: 18px;
+  cursor: pointer;
+  color: #cbd5f5;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.footer-social i:hover {
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 768px) {
+  .footer-social {
+    justify-content: center;
+    margin-top: 12px;
+  }
+
+  .footer-desc {
+    max-width: 100%;
+  }
+
+  .footer-bottom {
+    text-align: center;
+  }
+}
+
+/* Entry animation */
+@keyframes slideFade {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Mobile friendly */
+@media (max-width: 480px) {
+  .login-card {
+    padding: 30px 20px;
+  }
+}

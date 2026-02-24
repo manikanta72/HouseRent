@@ -12,10 +12,14 @@ import Typography from '@mui/material/Typography';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
+import CircularProgress from '@mui/material/CircularProgress';
 import axios from 'axios';
 import { message } from 'antd';
+
 const Register = () => {
   const navigate = useNavigate()
+  const [loading, setLoading] = useState(false);
+
   const [data, setData] = useState({
     name: "",
     email: "",
@@ -29,88 +33,81 @@ const Register = () => {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault()
-    if (!data?.name || !data?.email || !data?.password||! data?.type ) return alert("Please fill all fields");
-    else {
-      axios.post('http://localhost:8001/api/user/register', data)
-        .then((response) => {
-          if (response.data.success) {
-            message.success(response.data.message);
-            navigate('/login')
+    e.preventDefault();
 
-          } else {
-            message.error(response.data.message)
-          }
-        })
-        .catch((error) => {
-          console.log("Error", error);
-        });
+    if (!data?.name || !data?.email || !data?.password || !data?.type) {
+      return alert("Please fill all fields");
     }
-  };
 
+    setLoading(true);
+
+    axios.post('http://localhost:8001/api/user/register', data)
+      .then((response) => {
+        setLoading(false);
+
+        if (response.data.success) {
+          message.success(response.data.message);
+          navigate('/login');
+        } else {
+          message.error(response.data.message);
+        }
+      })
+      .catch(() => {
+        setLoading(false);
+        message.error("Registration failed");
+      });
+  };
 
   return (
     <>
-      <Navbar expand="lg" className="bg-body-tertiary">
+      {/* ================= NAVBAR ================= */}
+      <Navbar expand="lg" className="custom-navbar">
         <Container fluid>
-          <Navbar.Brand><h2>RentEase</h2></Navbar.Brand>
-          <Navbar.Toggle aria-controls="navbarScroll" />
-          <Navbar.Collapse id="navbarScroll">
-            <Nav
-              className="me-auto my-2 my-lg-0"
-              style={{ maxHeight: '100px' }}
-              navbarScroll
-            >
+          <Navbar.Brand className="brand-text">RentEase</Navbar.Brand>
+          <Navbar.Toggle />
+          <Navbar.Collapse>
+            <Nav className="ms-auto gap-3">
+              <Link className="nav-link-custom" to="/">Home</Link>
+              <Link className="nav-link-custom" to="/login">Login</Link>
+              <Link className="nav-link-custom" to="/register">Register</Link>
             </Nav>
-            <Nav>
-              <Link to={'/'}>Home</Link>
-              <Link to={'/login'}>Login</Link>
-              <Link to={'/register'}>Register</Link>
-            </Nav>
-
           </Navbar.Collapse>
         </Container>
       </Navbar>
 
-      <Container component="main" >
-        <Box
-          sx={{
-            marginTop: 8,
-            marginBottom: 4,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
-          <Avatar sx={{ bgcolor: 'secondary.main' }}>
+      {/* ================= REGISTER FORM ================= */}
+      <Container component="main" className="login-container">
+        <Box className="login-card">
+          <Avatar className="login-avatar">
             <LockOutlinedIcon />
           </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign up
+
+          <Typography component="h1" variant="h5" className="login-title">
+            Sign Up
           </Typography>
+
           <Box component="form" onSubmit={handleSubmit} noValidate>
             <TextField
               margin="normal"
               fullWidth
-              id="name"
-              label="Renter Full Name/Owner Name"
+              label="Renter Full Name / Owner Name"
               name="name"
               value={data.name}
               onChange={handleChange}
               autoComplete="name"
               autoFocus
             />
+
             <TextField
               margin="normal"
               fullWidth
-              id="email"
               label="Email Address"
               name="email"
               value={data.email}
               onChange={handleChange}
               autoComplete="email"
-              autoFocus
             />
+
             <TextField
               margin="normal"
               fullWidth
@@ -119,36 +116,38 @@ const Register = () => {
               onChange={handleChange}
               label="Password"
               type="password"
-              id="password"
               autoComplete="current-password"
             />
-            <InputLabel id="demo-simple-select-label">User Type</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              name='type'
-              value={data.type}
-              label="type"
-              defaultValue="Select User"
-              onChange={handleChange}
-              style={{ width: '200px' }}
-            >
-              <MenuItem value={'Select User'} disabled>Select User</MenuItem>
-              <MenuItem value={'Renter'}>Renter</MenuItem>
-              <MenuItem value={"Owner"}>Owner</MenuItem>
-            </Select>
+
             <Box mt={2}>
+              <InputLabel>User Type</InputLabel>
+              <Select
+                fullWidth
+                name="type"
+                value={data.type}
+                onChange={handleChange}
+              >
+                <MenuItem value="" disabled>Select User</MenuItem>
+                <MenuItem value="Renter">Renter</MenuItem>
+                <MenuItem value="Owner">Owner</MenuItem>
+              </Select>
+            </Box>
+
+            <Box mt={3} textAlign="center">
               <Button
                 type="submit"
                 variant="contained"
-                style={{ width: '200px' }}
+                disabled={loading}
+                className="login-btn"
               >
-                Sign Up
+                {loading ? <CircularProgress size={22} color="inherit" /> : "Sign Up"}
               </Button>
             </Box>
-            <Grid container>
-              <Grid item>Have an account?
-                <Link style={{ color: "blue" }} to={'/login'} variant="body2">
+
+            <Grid container className="login-links">
+              <Grid item xs={12}>
+                Already have an account?
+                <Link to="/login" className="signup-link">
                   {" Sign In"}
                 </Link>
               </Grid>
@@ -160,4 +159,4 @@ const Register = () => {
   )
 }
 
-export default Register
+export default Register;
